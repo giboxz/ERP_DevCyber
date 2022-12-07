@@ -29,12 +29,27 @@ nav {
     color: #ffff;
 }
 
+.abas-menu:hover{
+    border-bottom: 2px solid #ffff;
+    color: #ffff;
+}
+
 .homepage {
     width: 82vw;
     height: 90vh;
     background-color: rgb(235, 234, 234);
     display: flex;
     flex-direction: column;
+}
+
+.index {
+    width: 82vw;
+    height: 90vh;
+    background-color: rgb(235, 234, 234);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 i {
