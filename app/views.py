@@ -3,7 +3,8 @@ from django.shortcuts import render, redirect
 from .models import *
 from datetime import datetime
 from xml.etree.ElementTree import tostring
-
+from io import BytesIO as IO
+from django.http import HttpResponse
 
 def home(request):
     saidas = Saidas.objects.all()
@@ -117,10 +118,10 @@ def update_saida(request, id):
     return redirect(consulta_saida)
 
 def salva_excel_entradas(request):
-    msg = ''
+    excel_file = IO()
     dados = Entradas.objects.all()
 
-    workbook = xlsxwriter.Workbook("EntradasERP.xlsx")
+    workbook = xlsxwriter.Workbook(excel_file, {'in_memory': True})
     worksheet = workbook.add_worksheet("Entradas")
 
     worksheet.write(0, 0, "data_criacao")
@@ -137,14 +138,20 @@ def salva_excel_entradas(request):
         linha = linha + 1
 
     workbook.close()
-    msg = 'Dados salvos no excel!'
-    return render(request, 'consulta_entradas.html', {'msg': msg, "Entradas": dados})
+
+    excel_file.seek(0)
+
+    response = HttpResponse(excel_file.read(),
+                    content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="Entradas.xlsx"'
+
+    return response
 
 def salva_excel_saidas(request):
-    msg = ''
+    excel_file = IO()
     dados = Saidas.objects.all()
 
-    workbook = xlsxwriter.Workbook("SaidasERP.xlsx")
+    workbook = xlsxwriter.Workbook(excel_file, {'in_memory': True})
     worksheet = workbook.add_worksheet("Saidas")
 
     worksheet.write(0, 0, "data_criacao")
@@ -163,6 +170,12 @@ def salva_excel_saidas(request):
         linha = linha + 1
 
     workbook.close()
-    msg = 'Dados salvos no excel!'
-    return render(request, 'consulta_saidas.html', {'msg': msg, "Saidas": dados})
+
+    excel_file.seek(0)
+
+    response = HttpResponse(excel_file.read(),
+                    content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="Saidas.xlsx"'
+    
+    return response
 
