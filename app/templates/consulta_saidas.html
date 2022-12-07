@@ -28,27 +28,27 @@
 
     <main>
       <nav>
-        <a href="home.html"><div class="abas-menu">
+        <a href="{% url 'home' %}"><div class="abas-menu">
             <i class="fa-solid fa-house-user"></i>
             Home
         </div></a>
-        <a href="forms_saida_erp.html"><div class="abas-menu">
+        <a href="{% url 'form_saida' %}"><div class="abas-menu">
             <i class="fa-solid fa-file-invoice-dollar"></i>
             Cadastrar Despesas
         </div></a>
-        <a href="consulta_saidas.html"><div class="abas-menu">
+        <a href="{% url 'consulta_saida' %}"><div class="abas-menu">
             <i class="fa-solid fa-hand-holding-dollar"></i>
             Visualizar Despesas
         </div></a>
-        <a href="forms_entrada_erp.html"><div class="abas-menu">
+        <a href="{% url 'form_entrada' %}"><div class="abas-menu">
             <i class="fa-solid fa-money-bills"></i>
             Cadastrar Vendas
         </div></a>
-        <a href="consulta_entradas.html"><div class="abas-menu">
+        <a href="{% url 'consulta_entrada' %}"><div class="abas-menu">
             <i class="fa-solid fa-sack-dollar"></i>
             Visualizar Vendas
         </div></a>
-      </nav>
+    </nav>
 
       <div class="homepage"  style="align-items: center;">
         <a href="{% url 'salva_excel_saidas' %}">Salvar dados em Excel</a> {{ msg }}

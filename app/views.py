@@ -6,7 +6,25 @@ from xml.etree.ElementTree import tostring
 
 
 def home(request):
-    return render(request, "home.html")
+    saidas = Saidas.objects.all()
+    entradas = Entradas.objects.all()
+
+    valorDespesas = 0
+    valorVendas = 0
+
+    linhaSaida = 1
+    for s in saidas:
+        valorDespesas = valorDespesas + s.valor
+        linhaSaida = linhaSaida + 1
+
+    linhaEntrada = 1
+    for e in entradas:
+        valorVendas = valorVendas + e.valor
+        linhaEntrada = linhaEntrada + 1
+
+    valorLucro = valorVendas - valorDespesas
+
+    return render(request, "home.html", {'valorDespesas': valorDespesas, 'valorVendas': valorVendas, 'valorLucro': valorLucro})
 
 
 def form_entrada(request):
